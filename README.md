@@ -52,3 +52,78 @@ Fungsi setState() digunakan dalam StatefulWidget untuk memberi tahu Flutter bahw
        - Jika tombol Logout ditekan, Snackbar akan menunjukkan "Kamu telah menekan tombol Logout".
 
 7) Untuk memastikan Snackbar tidak bertumpuk, kode menggunakan `ScaffoldMessenger.of(context)..hideCurrentSnackBar()` sebelum menampilkan Snackbar baru.
+
+# Tugas 8
+
+[X] Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan const pada kode Flutter. Kapan sebaiknya kita menggunakan const, dan kapan sebaiknya tidak digunakan?
+1. Kegunaan const di Flutter: Kata kunci const di Flutter digunakan untuk membuat objek yang tidak berubah atau bersifat immutable. Dengan mendeklarasikan widget atau objek 
+sebagai const, Flutter dapat menghemat sumber daya karena tidak perlu membangun ulang objek tersebut setiap kali UI diperbarui.
+
+2. Keuntungan menggunakan const:
+"*"  Efisiensi: Mengurangi konsumsi memori dan mempercepat rendering, karena objek const tidak perlu dibuat ulang.
+"*" Optimalisasi Performa: Dengan menandai objek sebagai const, Flutter dapat memanfaatkan caching sehingga performa aplikasi meningkat.
+"*" Keamanan kode: Membuat kode lebih aman dari modifikasi tidak disengaja, karena objek yang dideklarasikan const tidak dapat diubah.
+
+3. Kapan sebaiknya menggunakan const:
+"*" Gunakan const ketika membuat widget yang tidak bergantung pada perubahan nilai state atau input. Contohnya, untuk teks atau ikon yang bersifat statis.
+"*" Sebaiknya tidak menggunakan const ketika widget bergantung pada variabel dinamis yang dapat berubah saat aplikasi berjalan.
+
+[X] Jelaskan dan bandingkan penggunaan Column dan Row pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini!
+1. Penggunaan Column dan Row di Flutter:
+"*" Column adalah widget yang menampilkan anak-anaknya secara vertikal (atas ke bawah), sementara Row menampilkan anak-anaknya secara horizontal (kiri ke kanan).
+"*" Column dan Row sangat bermanfaat dalam membuat layout secara fleksibel di Flutter. Keduanya memiliki properti mainAxisAlignment dan crossAxisAlignment yang memungkinkan pengaturan posisi elemen-elemen di dalamnya.
+
+2. Contoh implementasi:
+"*" Column:
+```dart
+Column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Text("Item 1"),
+    Text("Item 2"),
+    Text("Item 3"),
+  ],
+)
+```
+
+"*" Row:
+```dart
+Row(
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+    Icon(Icons.home),
+    Icon(Icons.search),
+    Icon(Icons.settings),
+  ],
+)
+```
+
+[X] Sebutkan apa saja elemen input yang kamu gunakan pada halaman form yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!
+"*" Misalnya, pada form ini digunakan elemen-elemen input seperti TextField, Checkbox, RadioButton, atau DropdownButton.
+"*" Elemen input Flutter lain yang mungkin tidak digunakan di tugas ini bisa termasuk Slider, Switch, atau DatePicker. Elemen-elemen ini bisa dipilih tergantung kebutuhan form; jika form tidak memerlukan pemilihan tanggal atau input dalam rentang nilai, maka elemen-elemen tersebut bisa saja tidak dimasukkan.
+
+[X] Bagaimana cara kamu mengatur tema (theme) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?
+"*" Dalam Flutter, pengaturan tema dilakukan melalui ThemeData di MaterialApp. Ini memungkinkan kita mengatur warna, teks, bentuk tombol, dan elemen lainnya secara konsisten di seluruh aplikasi.
+"*" Jika tema diimplementasikan, contohnya:
+```dart
+MaterialApp(
+  theme: ThemeData(
+    primarySwatch: Colors.blue,
+    textTheme: TextTheme(
+      bodyText1: TextStyle(fontSize: 18.0, color: Colors.black),
+    ),
+  ),
+)
+```
+"*" Tema membuat aplikasi lebih konsisten dan memudahkan perubahan desain secara menyeluruh
+
+[X] Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
+"*" Navigasi di Flutter biasanya ditangani menggunakan Navigator dan Route. Kita bisa mendorong halaman baru ke tumpukan dengan Navigator.push, dan kembali ke halaman sebelumnya dengan Navigator.pop.
+"*" Contoh navigasi sederhana:
+```dart
+// Navigasi ke halaman baru
+Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) => HalamanBaru()),
+);
+```
