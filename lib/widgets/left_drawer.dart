@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pacil_shop_mobile/screens/menu.dart';
 import 'package:pacil_shop_mobile/screens/productentry_form.dart';
+import 'package:pacil_shop_mobile/screens/list_productentry.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -10,11 +11,11 @@ class LeftDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          DrawerHeader(
+          const DrawerHeader(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
+              color: Colors.blue, // Warna header drawer biru
             ),
-            child: const Column(
+            child: Column(
               children: [
                 Text(
                   'Pacil Shop',
@@ -49,6 +50,17 @@ class LeftDrawer extends StatelessWidget {
                 ),
               );
             },
+          ),
+          ListTile(
+              leading: const Icon(Icons.add_shopping_cart),
+              title: const Text('Daftar Produk'),
+              onTap: () {
+                  // Route menu ke halaman product
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ProductEntryPage()),
+                  );
+              },
           ),
           ListTile(
             leading: const Icon(Icons.add),

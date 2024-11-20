@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pacil_shop_mobile/widgets/left_drawer.dart';
-import 'package:pacil_shop_mobile/screens/productentry_form.dart'; 
+import 'package:pacil_shop_mobile/screens/productentry_form.dart';
+import 'package:pacil_shop_mobile/screens/list_productentry.dart';
+import 'package:pacil_shop_mobile/screens/login.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:pacil_shop_mobile/widgets/product_card.dart';
 
 class MyHomePage extends StatelessWidget {
-  
   final List<ItemHomepage> items = [
     ItemHomepage("Lihat Daftar Produk", Icons.view_list, Colors.blue),
     ItemHomepage("Tambah Produk", Icons.add, Colors.green),
@@ -43,7 +47,8 @@ class MyHomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16.0),
-            Expanded( // Use Expanded to fit the GridView within the remaining space
+            Expanded(
+              // Use Expanded to fit the GridView within the remaining space
               child: GridView.count(
                 primary: false,
                 padding: const EdgeInsets.all(20),
@@ -97,12 +102,36 @@ class ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.read<CookieRequest>(); // Akses CookieRequest
     return Material(
       color: item.color,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
-        onTap: () {
-          if (item.name == "Tambah Produk") {
+        onTap: () async {
+          if (item.name == "Lihat Daftar Produk") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    const ProductEntryPage(), // Arahkan ke halaman ProductEntryPage
+              ),
+            );
+          } else if (item.name == "Logout") {
+            // Lakukan logout
+            await request.logout("http://127.0.0.1:8000/auth/logout/");
+            if (context.mounted) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+                (route) => false,
+              );
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  const SnackBar(content: Text('Anda berhasil logout.')),
+                );
+            }
+          } else if (item.name == "Tambah Produk") {
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -124,7 +153,9 @@ class ItemCard extends StatelessWidget {
               children: [
                 Icon(item.icon, color: Colors.white, size: 30.0),
                 const SizedBox(height: 3),
-                Text(item.name, textAlign: TextAlign.center, style: const TextStyle(color: Colors.white)),
+                Text(item.name,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.white)),
               ],
             ),
           ),
@@ -132,12 +163,4 @@ class ItemCard extends StatelessWidget {
       ),
     );
   }
-}
-
-class ItemHomepage {
-  final String name;
-  final IconData icon;
-  final Color color;
-
-  ItemHomepage(this.name, this.icon, this.color);
 }
